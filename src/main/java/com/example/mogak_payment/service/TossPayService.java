@@ -46,8 +46,13 @@ public class TossPayService {
                 .body(CreatePaymentResponse.class);
     }
 
-    public void handlePaymentCallback(CallBackRequest callback) {
-        log.info("handlePaymentCallback");
+    public void handlePaymentCallback1(CallBackRequest callback) {
+        log.info("handlePaymentCallback1");
+        paymentResultRepository.save(callback.toEntity());
+    }
+
+    public void handlePaymentCallback2(CallBackRequest callback) {
+        log.info("handlePaymentCallback2");
         paymentResultRepository.save(callback.toEntity());
     }
 

@@ -27,8 +27,14 @@ public class TossPayController {
     }
 
     @PostMapping(value = "/callback", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> handleTossCallback(@ModelAttribute CallBackRequest callBackRequest) {
-        tossPayService.handlePaymentCallback(callBackRequest);
+    public ResponseEntity<Void> handleTossCallback(@RequestBody CallBackRequest callBackRequest) {
+        tossPayService.handlePaymentCallback1(callBackRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/callback", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Void> handleTossCallbackForm(CallBackRequest callBackRequest) {
+        tossPayService.handlePaymentCallback2(callBackRequest);
         return ResponseEntity.ok().build();
     }
 

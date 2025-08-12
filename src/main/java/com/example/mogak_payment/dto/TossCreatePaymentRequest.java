@@ -9,10 +9,11 @@ public class TossCreatePaymentRequest {
 
     private String apiKey;
     private String orderNo;
+    private Integer amount;
     private String productDesc;
+    private boolean autoExecute;
     private String retUrl;
     private String retCancelUrl;
-    private Integer amount;
     private Integer amountTaxFree;
 
 }

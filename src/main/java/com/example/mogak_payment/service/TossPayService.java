@@ -1,24 +1,22 @@
 package com.example.mogak_payment.service;
 
-import com.example.mogak_payment.domain.PaymentResult;
 import com.example.mogak_payment.domain.PaymentResultRepository;
-import com.example.mogak_payment.dto.CreatePaymentRequest;
-import com.example.mogak_payment.dto.CreatePaymentResponse;
-import com.example.mogak_payment.dto.TossCreatePaymentRequest;
+import com.example.mogak_payment.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TossPayService {
 
-    private static final String RET_URL = "/success";
-    private static final String RET_CANCEL_URL = "/cancel";
+    private static final String RET_URL = "http://www.mogak.kr:8081/callback";
+    private static final String RET_CANCEL_URL = "http://www.mogak.kr:8081/callback";
 
     private final RestClient restClient;
     private final PaymentResultRepository paymentResultRepository;
@@ -33,21 +31,30 @@ public class TossPayService {
                 .retUrl(RET_URL)
                 .retCancelUrl(RET_CANCEL_URL)
                 .orderNo(UUID.randomUUID().toString())
+                .autoExecute(true)
                 .productDesc(createPaymentReq.getProductDesc())
                 .amount(createPaymentReq.getAmount())
                 .amountTaxFree(createPaymentReq.getAmountTaxFree())
                 .build();
 
-        CreatePaymentResponse res = restClient.post()
+        return restClient.post()
                 .uri("/payments")
                 .body(tossCreatePaymentRequest)
                 .retrieve()
                 .body(CreatePaymentResponse.class);
+    }
 
-        PaymentResult paymentResult = Objects.requireNonNull(res).toEntity();
-        paymentResultRepository.save(paymentResult);
+    public void handlePaymentCallback(CallBackRequest callback) {
+        log.info("handlePaymentCallback");
+        paymentResultRepository.save(callback.toEntity());
+    }
 
-        return res;
+    public PayStatusCheckResponse checkStatus(PayStatusCheckRequest request) {
+        return restClient.post()
+                .uri("/status")
+                .body(request)
+                .retrieve()
+                .body(PayStatusCheckResponse.class);
     }
 
 }

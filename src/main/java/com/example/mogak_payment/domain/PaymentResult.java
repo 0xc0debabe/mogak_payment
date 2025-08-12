@@ -1,9 +1,6 @@
 package com.example.mogak_payment.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,12 +15,27 @@ public class PaymentResult {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String status;
     private String payToken;
-    private PaymentStatus paymentStatus;
-
-    private String errorCode;
-    private String errorMessage;
-
-    private LocalDateTime createdAt;
+    private String orderNo;
+    private String payMethod;
+    private Integer amount;
+    private Integer discountedAmount;
+    private Integer paidAmount;
+    private String paidTs;
+    private String transactionId;
+    private Integer cardCompanyCode;
+    private String cardAuthorizationNo;
+    private Integer spreadOut;
+    private Boolean noInterest;
+    private String cardMethodType;
+    private String cardNumber;
+    private String cardUserType;
+    private String cardBinNumber;
+    private String cardNum4Print;
+    private String salesCheckLinkUrl;
+    private String accountBankCode;
+    private String accountBankName;
+    private String accountNumber;
 
 }

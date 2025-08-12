@@ -5,6 +5,7 @@ import com.example.mogak_payment.dto.CreatePaymentRequest;
 import com.example.mogak_payment.dto.CreatePaymentResponse;
 import com.example.mogak_payment.service.TossPayService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,8 @@ public class TossPayController {
         return "success";
     }
 
-    @PostMapping("/callback")
-    public ResponseEntity<Void> handleTossCallback(@RequestBody CallBackRequest callBackRequest) {
+    @PostMapping(value = "/callback", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Void> handleTossCallback(@ModelAttribute CallBackRequest callBackRequest) {
         tossPayService.handlePaymentCallback(callBackRequest);
         return ResponseEntity.ok().build();
     }

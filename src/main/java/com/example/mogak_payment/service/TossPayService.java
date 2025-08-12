@@ -15,8 +15,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TossPayService {
 
-    private static final String RET_URL = "http://api.mogak.kr:8081/payment/callback";
-    private static final String RET_CANCEL_URL = "http://api.mogak.kr:8081/payment/cancel";
+    private static final String RET_URL = "https://api.mogak.kr:8081/payment/callback";
+    private static final String RET_CANCEL_URL = "https://api.mogak.kr:8081/payment/cancel";
 
     private final RestClient restClient;
     private final PaymentResultRepository paymentResultRepository;

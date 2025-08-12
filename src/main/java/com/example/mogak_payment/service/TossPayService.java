@@ -15,7 +15,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TossPayService {
 
-    private static final String RET_URL = "https://api.mogak.kr/payment/callback";
+    private static final String RET_URL = "https://api.mogak.kr/payment/returl";
+    private static final String RET_CALLBACK = "https://api.mogak.kr/payment/callback";
     private static final String RET_CANCEL_URL = "https://api.mogak.kr/payment/cancel";
 
     private final RestClient restClient;
@@ -30,6 +31,7 @@ public class TossPayService {
                 .apiKey(apiKey)
                 .retUrl(RET_URL)
                 .retCancelUrl(RET_CANCEL_URL)
+                .resultCallback(RET_CALLBACK)
                 .orderNo(UUID.randomUUID().toString())
                 .autoExecute(true)
                 .productDesc(createPaymentReq.getProductDesc())

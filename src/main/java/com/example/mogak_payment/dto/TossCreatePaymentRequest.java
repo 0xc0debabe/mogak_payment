@@ -15,5 +15,6 @@ public class TossCreatePaymentRequest {
     private String retUrl;
     private String retCancelUrl;
     private Integer amountTaxFree;
+    private String resultCallback;
 
 }

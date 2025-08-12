@@ -6,10 +6,7 @@ import com.example.mogak_payment.dto.CreatePaymentResponse;
 import com.example.mogak_payment.service.TossPayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payment")
@@ -21,6 +18,11 @@ public class TossPayController {
     @PostMapping("/create")
     public ResponseEntity<CreatePaymentResponse> createPayment(@RequestBody CreatePaymentRequest createPaymentReq) {
         return ResponseEntity.ok(tossPayService.createPayment(createPaymentReq));
+    }
+
+    @GetMapping("/returl")
+    public String returl() {
+        return "success";
     }
 
     @PostMapping("/callback")

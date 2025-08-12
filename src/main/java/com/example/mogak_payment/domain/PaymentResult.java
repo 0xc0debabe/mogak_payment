@@ -26,8 +26,8 @@ public class PaymentResult {
     private String transactionId;
     private Integer cardCompanyCode;
     private String cardAuthorizationNo;
-    private Integer spreadOut;
-    private Boolean noInterest;
+    private String spreadOut; // 변경: Integer -> String
+    private Boolean noInterest; // 가능은 하지만 String 처리 후 변환이 안전
     private String cardMethodType;
     private String cardNumber;
     private String cardUserType;
@@ -37,5 +37,6 @@ public class PaymentResult {
     private String accountBankCode;
     private String accountBankName;
     private String accountNumber;
+    private Integer paidPoint; // optional, fadeout field
 
 }

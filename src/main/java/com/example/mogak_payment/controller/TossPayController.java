@@ -26,7 +26,7 @@ public class TossPayController {
         return "success";
     }
 
-    @PostMapping(value = "/callback", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/callback", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> handleTossCallback(@ModelAttribute CallBackRequest callBackRequest) {
         tossPayService.handlePaymentCallback(callBackRequest);
         return ResponseEntity.ok().build();

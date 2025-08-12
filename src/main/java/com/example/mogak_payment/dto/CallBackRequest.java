@@ -16,8 +16,8 @@ public class CallBackRequest {
     private String transactionId;
     private Integer cardCompanyCode;
     private String cardAuthorizationNo;
-    private Integer spreadOut;
-    private Boolean noInterest;
+    private String spreadOut; // 변경: Integer -> String
+    private Boolean noInterest; // 가능은 하지만 String 처리 후 변환이 안전
     private String cardMethodType;
     private String cardNumber;
     private String cardUserType;
@@ -27,31 +27,33 @@ public class CallBackRequest {
     private String accountBankCode;
     private String accountBankName;
     private String accountNumber;
+    private Integer paidPoint; // optional, fadeout field
 
     public PaymentResult toEntity() {
         return PaymentResult.builder()
-                .status(this.status)
-                .payToken(this.payToken)
-                .orderNo(this.orderNo)
-                .payMethod(this.payMethod)
-                .amount(this.amount)
-                .discountedAmount(this.discountedAmount)
-                .paidAmount(this.paidAmount)
-                .paidTs(this.paidTs)
-                .transactionId(this.transactionId)
-                .cardCompanyCode(this.cardCompanyCode)
-                .cardAuthorizationNo(this.cardAuthorizationNo)
-                .spreadOut(this.spreadOut)
-                .noInterest(this.noInterest)
-                .cardMethodType(this.cardMethodType)
-                .cardNumber(this.cardNumber)
-                .cardUserType(this.cardUserType)
-                .cardBinNumber(this.cardBinNumber)
-                .cardNum4Print(this.cardNum4Print)
-                .salesCheckLinkUrl(this.salesCheckLinkUrl)
-                .accountBankCode(this.accountBankCode)
-                .accountBankName(this.accountBankName)
-                .accountNumber(this.accountNumber)
+                .status(status)
+                .payToken(payToken)
+                .orderNo(orderNo)
+                .payMethod(payMethod)
+                .amount(amount)
+                .discountedAmount(discountedAmount)
+                .paidAmount(paidAmount)
+                .paidTs(paidTs)
+                .transactionId(transactionId)
+                .cardCompanyCode(cardCompanyCode)
+                .cardAuthorizationNo(cardAuthorizationNo)
+                .spreadOut(spreadOut)
+                .noInterest(noInterest)
+                .cardMethodType(cardMethodType)
+                .cardNumber(cardNumber)
+                .cardUserType(cardUserType)
+                .cardBinNumber(cardBinNumber)
+                .cardNum4Print(cardNum4Print)
+                .salesCheckLinkUrl(salesCheckLinkUrl)
+                .accountBankCode(accountBankCode)
+                .accountBankName(accountBankName)
+                .accountNumber(accountNumber)
+                .paidPoint(paidPoint)
                 .build();
     }
 }

@@ -76,7 +76,8 @@ public class TossPayService {
                         .amount(p.getAmount())
                         .build())
                 .orElseThrow(() -> new PayException(ErrorCode.NOT_EXIST_PAY_INFO));
-        log.info(info.toString());
+        log.info("paytoken={}", info.getPayToken());
+        log.info("amount={}", info.getAmount());
 
         TossRefundRequest refundRequest = TossRefundRequest.builder()
                 .apiKey(apiKey)

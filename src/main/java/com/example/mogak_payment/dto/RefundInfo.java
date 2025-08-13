@@ -1,13 +1,12 @@
 package com.example.mogak_payment.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
+@Builder
 @Getter
-@Setter
-public class CreatePaymentRequest {
+public class RefundInfo {
 
-    private String productDesc;
+    private String payToken;
     private Integer amount;
-
 }

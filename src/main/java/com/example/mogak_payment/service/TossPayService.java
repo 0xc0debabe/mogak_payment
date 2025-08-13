@@ -87,14 +87,18 @@ public class TossPayService {
                 .amount(info.getAmount())
                 .build();
         log.info("3");
-        RefundResult refundResult = restClient.post()
+
+        TossRefundResponse refundResponse = restClient.post()
                 .body(refundRequest)
                 .retrieve()
-                .body(RefundResult.class);
+                .body(TossRefundResponse.class);
+
         log.info("4");
+        RefundResult refundResult = Objects.requireNonNull(refundResponse).toEntity();
+        log.info("5");
         refundResultRepository.save(Objects.requireNonNull(refundResult));
         boolean success = refundResult.getCode() == 0;
-        log.info("5");
+        log.info("6");
         return new RefundResponse(success, refundResult.getRefundedAmount(), success ? null : refundResult.getMsg());
     }
 

@@ -90,6 +90,7 @@ public class TossPayService {
         log.info("3");
 
         TossRefundResponse refundResponse = restClient.post()
+                .uri("/refunds")
                 .body(refundRequest)
                 .retrieve()
                 .body(TossRefundResponse.class);

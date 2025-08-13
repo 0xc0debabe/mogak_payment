@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleException(Exception e) {
         Map<String, Object> errorBody = Map.of(
-                "error", "서버 내부 오류가 발생했습니다.",
+                "error", e.getMessage(),
                 "code", "INTERNAL_SERVER_ERROR"
         );
 

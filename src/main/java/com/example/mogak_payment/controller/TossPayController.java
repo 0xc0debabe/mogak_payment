@@ -36,4 +36,9 @@ public class TossPayController {
         return ResponseEntity.ok(tossPayService.processRefund(request));
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<PayStatusCheckResponse> statusCheck(@RequestBody PayStatusCheckRequest request) {
+        return ResponseEntity.ok(tossPayService.checkStatus(request));
+    }
+
 }

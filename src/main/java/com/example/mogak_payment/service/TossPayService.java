@@ -59,21 +59,24 @@ public class TossPayService {
     }
 
     public PayStatusCheckResponse checkStatus(PayStatusCheckRequest request) {
+        TossPayStatusCheckRequest checkRequest = new TossPayStatusCheckRequest(apiKey, request.getOrderNo());
+
         return restClient.post()
                 .uri("/status")
-                .body(request)
+                .body(checkRequest)
                 .retrieve()
                 .body(PayStatusCheckResponse.class);
     }
 
     public RefundResponse processRefund(RefundRequest request) {
+        log.info("1");
         RefundInfo info = paymentResultRepository.findByOrderNo(request.getOrderNo())
                 .map(p -> RefundInfo.builder()
                         .payToken(p.getPayToken())
                         .amount(p.getAmount())
                         .build())
                 .orElseThrow(() -> new PayException(ErrorCode.NOT_EXIST_PAY_INFO));
-
+        log.info("2");
 
         TossRefundRequest refundRequest = TossRefundRequest.builder()
                 .apiKey(apiKey)
@@ -83,14 +86,15 @@ public class TossPayService {
                 .reason(request.getReason())
                 .amount(info.getAmount())
                 .build();
-
+        log.info("3");
         RefundResult refundResult = restClient.post()
                 .body(refundRequest)
                 .retrieve()
                 .body(RefundResult.class);
-
+        log.info("4");
         refundResultRepository.save(Objects.requireNonNull(refundResult));
         boolean success = refundResult.getCode() == 0;
+        log.info("5");
         return new RefundResponse(success, refundResult.getRefundedAmount(), success ? null : refundResult.getMsg());
     }
 

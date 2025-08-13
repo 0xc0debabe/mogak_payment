@@ -76,7 +76,7 @@ public class TossPayService {
                         .amount(p.getAmount())
                         .build())
                 .orElseThrow(() -> new PayException(ErrorCode.NOT_EXIST_PAY_INFO));
-        log.info("2");
+        log.info(info.toString());
 
         TossRefundRequest refundRequest = TossRefundRequest.builder()
                 .apiKey(apiKey)
@@ -92,6 +92,7 @@ public class TossPayService {
                 .body(refundRequest)
                 .retrieve()
                 .body(TossRefundResponse.class);
+        log.info("refundResponse: {}", refundResponse);
 
         log.info("4");
         RefundResult refundResult = Objects.requireNonNull(refundResponse).toEntity();

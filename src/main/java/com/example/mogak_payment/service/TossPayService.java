@@ -115,8 +115,13 @@ public class TossPayService {
         boolean b1 = paymentResultRepository.existsByPayToken(callback.getPayToken());
         log.info("b1={}", b1);
         if (b1) return true;
-        Boolean isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getPayToken(), "lock", Duration.ofMinutes(3));
-        log.info("isFirst={}", isFirst);
+        Boolean isFirst = false;
+        try {
+            isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getPayToken(), "lock", Duration.ofMinutes(3));
+        } catch (Exception e) {
+            log.error("redisTemplate.opsForValue().setIfAbsent", e);
+        }
+
         boolean equals = Boolean.FALSE.equals(isFirst);
         log.info("equals={}", equals);
         return equals;

@@ -87,7 +87,9 @@ public class TossPayService {
     public void handlePaymentCallback(CallBackRequest callback, Long memberId) {
         log.info("Callback requested, memberId={}", memberId);
         if (isDuplicate(callback)) return;
+        log.info("2");
         paymentResultRepository.save(callback.toEntity(memberId));
+        log.info("3");
         chargeGamePoint(memberId, callback.getAmount(), callback.getPayToken());
     }
 

@@ -11,10 +11,17 @@ import org.springframework.web.client.RestClient;
 public class RestClientConfig {
 
     @Bean
-    public RestClient restClient(@Value("${toss.base-url}") String tossApiUrl) {
-
+    public RestClient tossRestClient(@Value("${toss.base-url}") String tossApiUrl) {
         return RestClient.builder()
                 .baseUrl(tossApiUrl)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+    }
+
+    @Bean
+    public RestClient mogakRestClient(@Value("${mogak.base-url}") String mogakApiUrl) {
+        return RestClient.builder()
+                .baseUrl(mogakApiUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }

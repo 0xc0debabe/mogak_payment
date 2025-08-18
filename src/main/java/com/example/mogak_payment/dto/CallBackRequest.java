@@ -29,7 +29,7 @@ public class CallBackRequest {
     private String accountNumber;
     private Integer paidPoint; // optional, fadeout field
 
-    public PaymentResult toEntity() {
+    public PaymentResult toEntity(Long memberId) {
         return PaymentResult.builder()
                 .status(status)
                 .payToken(payToken)
@@ -54,6 +54,7 @@ public class CallBackRequest {
                 .accountBankName(accountBankName)
                 .accountNumber(accountNumber)
                 .paidPoint(paidPoint)
+                .memberId(memberId)
                 .build();
     }
 }

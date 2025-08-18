@@ -40,4 +40,6 @@ public class PaymentResult {
     private String accountNumber;
     private Integer paidPoint; // optional, fadeout field
 
+    private Long memberId;
+
 }

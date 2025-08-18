@@ -59,7 +59,6 @@ public class TossPayService {
         this.redisTemplate = redisTemplate;
     }
 
-
     @Value("${toss.secretKey}")
     private String apiKey;
 
@@ -86,6 +85,7 @@ public class TossPayService {
     }
 
     public void handlePaymentCallback(CallBackRequest callback, Long memberId) {
+        log.info("Callback requested, memberId={}", memberId);
         if (isDuplicate(callback)) return;
         paymentResultRepository.save(callback.toEntity(memberId));
         chargeGamePoint(memberId, callback.getAmount(), callback.getPayToken());
@@ -97,6 +97,7 @@ public class TossPayService {
             backoff = @Backoff(delay = 2000)
     )
     private void chargeGamePoint(Long memberId, Integer amount, String payToken) {
+        log.info("ChargeGamePoint requested, memberId={}, amount={}", memberId, amount);
         ChargePointRequest request = new ChargePointRequest(memberId, amount);
 
         mogakRestClient.post()
@@ -107,6 +108,7 @@ public class TossPayService {
     }
 
     private boolean isDuplicate(CallBackRequest callback) {
+        log.info("DuplicateCheck");
         if (paymentResultRepository.existsByPayToken(callback.getPayToken())) return true;
         Boolean isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getPayToken(), "lock", Duration.ofMinutes(3));
         return Boolean.FALSE.equals(isFirst);

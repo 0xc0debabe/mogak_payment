@@ -112,23 +112,9 @@ public class TossPayService {
     private boolean isDuplicate(CallBackRequest callback) {
         log.info("DuplicateCheck");
 
-        boolean b1 = paymentResultRepository.existsByPayToken(callback.getPayToken());
-        log.info("b1={}", b1);
-        if (b1) return true;
-        Boolean isFirst = false;
-        try {
-            isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getPayToken(), "lock", Duration.ofMinutes(3));
-        } catch (Exception e) {
-            log.error("redisTemplate.opsForValue().setIfAbsent", e);
-        }
-
-        boolean equals = Boolean.FALSE.equals(isFirst);
-        log.info("equals={}", equals);
-        return equals;
-
-//        if (paymentResultRepository.existsByPayToken(callback.getPayToken())) return true;
-//        Boolean isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getPayToken(), "lock", Duration.ofMinutes(3));
-//        return Boolean.FALSE.equals(isFirst);
+        if (paymentResultRepository.existsByPayToken(callback.getPayToken())) return true;
+        Boolean isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getPayToken(), "lock", Duration.ofMinutes(3));
+        return Boolean.FALSE.equals(isFirst);
     }
 
     @Recover

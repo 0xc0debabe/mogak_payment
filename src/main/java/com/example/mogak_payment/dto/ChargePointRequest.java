@@ -9,5 +9,6 @@ public class ChargePointRequest {
 
     private Long memberId;
     private Integer amount;
+    private String payToken;
 
 }

@@ -15,6 +15,6 @@ public interface PaymentResultRepository extends JpaRepository<PaymentResult, Lo
 
     Optional<PaymentResult> findByPayToken(String payToken);
 
-    boolean existsByPayToken(String payToken);
+    boolean existsByOrderNo(String orderNo);
 
 }

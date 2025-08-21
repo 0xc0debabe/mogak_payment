@@ -111,7 +111,7 @@ public class TossPayService {
         log.info("DuplicateCheck");
 
         if (paymentResultRepository.existsByOrderNo(callback.getOrderNo())) return true;
-        Boolean isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getOrderNo(), "lock", Duration.ofMinutes(3));
+        Boolean isFirst = redisTemplate.opsForValue().setIfAbsent(callback.getOrderNo() +":payment", "lock", Duration.ofMinutes(3));
         return Boolean.FALSE.equals(isFirst);
     }
 
